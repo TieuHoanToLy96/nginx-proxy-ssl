@@ -1,0 +1,21 @@
+version: "2"
+services:
+  nginx-proxy:
+    container_name: nginx-proxy
+    image: nginx:alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./hosts:/etc/hosts
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./certificates:/etc/ssl/certs:cached
+    networks:
+      - shared_network
+      - default
+
+networks:
+  shared_network:
+    external:
+      name: pancake_network
